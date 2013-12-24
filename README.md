@@ -6,3 +6,5 @@ Graphs are frequently used to model data. An example is a social network graph: 
 Dependencies: MATLAB, CMG-Solver (http://ccom.uprrp.edu/~ikoutis/cmg.html)
 
 OLD-CODE: http://ccom.uprrp.edu/~ikoutis/SpectralAlgorithms.htm
+
+web: http://richardgl.zzl.org/
