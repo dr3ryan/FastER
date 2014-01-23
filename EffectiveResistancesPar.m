@@ -1,4 +1,4 @@
-function [eff_res,Z] = EffectiveResistances(elist,e,w,tol,epsilon,type_,pfun_)
+function [eff_res,Z] = EffectiveResistancesPar(elist,e,w,tol,epsilon,type_,pfun_)
 % Function [eff_res,Z] = EffectiveResistances(e,w,tol,epsilon,type_,pfun_)
 % calculate the effective resistance (ER) in a given graph, the graph
 % is view as an electrical network in where the weight of the edges
@@ -105,19 +105,19 @@ function [eff_res,Z] = EffectiveResistances(elist,e,w,tol,epsilon,type_,pfun_)
         eff_res1 = cell(1,rows);
         optimset('display','off');
         if (length(L) > 600) % bigger graphs
-            for j=1:scale
+            parfor j=1:scale
                 ons = (rand(1,m) > tolProb);
                 ons = ons - not(ons);
                 ons = ons./sqrt(scale);
-                [Z_ flag]= pcg(L,(ons*(W)*B)',tol,numIterations,pfun);
+                [Z flag]= pcg(L,(ons*(W)*B)',tol,numIterations,pfun);
                 if flag > 0
                     error(['PCG FLAG: ' num2str(flag)])
                 end
-                Z_ = Z_';
-                eff_res1{j} = (abs((Z_(elist(:,1))-Z_(elist(:,2)))).^2)';
+                Z = Z';
+                eff_res(j,:) = (abs((Z(elist(:,1))-Z(elist(:,2)))).^2);
             end
-            eff_res = sum(cell2mat(eff_res1),2);
-            Z = Inf;
+            eff_res = sum(eff_res,1);
+            Z = NaN;
         else % smaller graphs
             for j=1:scale
                 ons = (rand(1,m) > tolProb);
@@ -145,7 +145,7 @@ function [eff_res,Z] = EffectiveResistances(elist,e,w,tol,epsilon,type_,pfun_)
         optimset('display','off');
         %% Solving the systems
         if (length(L) > 600) % bigger graphs
-            for j=1:scale
+            parfor j=1:scale
                 [Z(j,:) flag] = pcg(L,SYS(j,:)',tol,numIterations,pfun);
                 if flag > 0
                     error(['PCG FLAG: ' num2str(flag)])
