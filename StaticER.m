@@ -20,10 +20,22 @@ function [er] = StaticER(elist,Graph,tol,epsilon)
     %   [ers] = StatticER(elist,Graph);
     %
     if nargin == 4
-        [er] = EffectiveResistances(elist,Graph{1},Graph{2},tol,epsilon,'slm');
+        if matlabpool('size')
+            [er] = EffectiveResistancesPar(elist,Graph{1},Graph{2},tol,epsilon,'slm');
+        else
+            [er] = EffectiveResistances(elist,Graph{1},Graph{2},tol,epsilon,'slm');
+        end
     elseif nargin == 3
-        [er] = EffectiveResistances(elist,Graph{1},Graph{2},tol,1,'slm');
+        if matlabpool('size')
+            [er] = EffectiveResistancesPar(elist,Graph{1},Graph{2},tol,1,'slm');
+        else
+            [er] = EffectiveResistances(elist,Graph{1},Graph{2},tol,1,'slm');
+        end
     elseif nargin == 2
-        [er] = EffectiveResistances(elist,Graph{1},Graph{2},1e-4,1,'slm');
+        if matlabpool('size')
+            [er] = EffectiveResistancesPar(elist,Graph{1},Graph{2},1e-4,1,'slm');
+        else
+            [er] = EffectiveResistances(elist,Graph{1},Graph{2},1e-4,1,'slm');
+        end
     end
 end

@@ -25,12 +25,22 @@ function [queryFun,Z]=QueryPlusER(Graph,tol,epsilon)
     %   elist = [1 50; 2 50];
     %   ers = queryFun(Z,elist);
     %
-    if nargin == 3
-        [~,Z] = EffectiveResistances([1,1],Graph{1},Graph{2},tol,epsilon,'spl');
-    elseif nargin == 2
-        [~,Z] = EffectiveResistances([1,1],Graph{1},Graph{2},tol,1,'spl');
-    elseif nargin == 1
-        [~,Z] = EffectiveResistances([1,1],Graph{1},Graph{2},1e-4,1,'spl');
+    if matlabpool('size')
+        if nargin == 3
+            [~,Z] = EffectiveResistancesPar([1,1],Graph{1},Graph{2},tol,epsilon,'spl');
+        elseif nargin == 2
+            [~,Z] = EffectiveResistancesPar([1,1],Graph{1},Graph{2},tol,1,'spl');
+        elseif nargin == 1
+            [~,Z] = EffectiveResistancesPar([1,1],Graph{1},Graph{2},1e-4,1,'spl');
+        end
+    else
+        if nargin == 3
+            [~,Z] = EffectiveResistances([1,1],Graph{1},Graph{2},tol,epsilon,'spl');
+        elseif nargin == 2
+            [~,Z] = EffectiveResistances([1,1],Graph{1},Graph{2},tol,1,'spl');
+        elseif nargin == 1
+            [~,Z] = EffectiveResistances([1,1],Graph{1},Graph{2},1e-4,1,'spl');
+        end
     end
     queryFun = @(Z_,elist) sum(((Z_(:,elist(:,1))- ...
                                 Z_(:,elist(:,2))).^2),1)';
