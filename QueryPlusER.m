@@ -25,7 +25,12 @@ function [queryFun,Z]=QueryPlusER(Graph,tol,epsilon)
     %   elist = [1 50; 2 50];
     %   ers = queryFun(Z,elist);
     %
-    if matlabpool('size')
+    try
+        parFlag = matlabpool('size');
+    catch
+        parFlag = 0;
+    end
+    if parFlag
         if nargin == 3
             [~,Z] = EffectiveResistancesPar([1,1],Graph{1},Graph{2},tol,epsilon,'spl');
         elseif nargin == 2
@@ -34,6 +39,7 @@ function [queryFun,Z]=QueryPlusER(Graph,tol,epsilon)
             [~,Z] = EffectiveResistancesPar([1,1],Graph{1},Graph{2},1e-4,1,'spl');
         end
     else
+        warning('Parallelism not possible: matlabpool not found');
         if nargin == 3
             [~,Z] = EffectiveResistances([1,1],Graph{1},Graph{2},tol,epsilon,'spl');
         elseif nargin == 2

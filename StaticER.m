@@ -19,22 +19,30 @@ function [er] = StaticER(elist,Graph,tol,epsilon)
     %   elist = [1 50; 2 50];
     %   [ers] = StatticER(elist,Graph);
     %
+    try
+        parFlag = matlabpool('size');
+    catch
+        parFlag = 0;
+    end
     if nargin == 4
-        if matlabpool('size')
+        if parFlag
             [er] = EffectiveResistancesPar(elist,Graph{1},Graph{2},tol,epsilon,'slm');
         else
+            warning('Parallelism not possible: matlabpool not found');
             [er] = EffectiveResistances(elist,Graph{1},Graph{2},tol,epsilon,'slm');
         end
     elseif nargin == 3
-        if matlabpool('size')
+        if parFlag
             [er] = EffectiveResistancesPar(elist,Graph{1},Graph{2},tol,1,'slm');
         else
+            warning('Parallelism not possible: matlabpool not found');
             [er] = EffectiveResistances(elist,Graph{1},Graph{2},tol,1,'slm');
         end
     elseif nargin == 2
-        if matlabpool('size')
+        if parFlag
             [er] = EffectiveResistancesPar(elist,Graph{1},Graph{2},1e-4,1,'slm');
         else
+            warning('Parallelism not possible: matlabpool not found');            
             [er] = EffectiveResistances(elist,Graph{1},Graph{2},1e-4,1,'slm');
         end
     end

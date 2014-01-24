@@ -16,7 +16,7 @@ function [er] = ExactER(elist,Graph,tol,epsilon)
     %   Graph{1} = [(1:49)' (2:50)']; Graph{2} = ones(49,1);
     %   elist = [1 50; 2 50; 1 2];
     %   [ers] = ExactER(elist,Graph);
-    %
+    % 
     if nargin == 4
         [er] = EffectiveResistances(elist,Graph{1},Graph{2},tol,epsilon,'org');
     elseif nargin == 3

@@ -24,13 +24,28 @@ function [queryFun] = QueryER(Graph,tol,epsilon)
     %   [queryFun] = QueryER(Graph);
     %   ers = queryFun(1,2);
     %
-
-    if nargin == 3
-        [~,Z] = EffectiveResistances([1,1],Graph{1},Graph{2},tol,epsilon,'spl');
-    elseif nargin == 2
-        [~,Z] = EffectiveResistances([1,1],Graph{1},Graph{2},tol,1,'spl');
-    elseif nargin == 1
-        [~,Z] = EffectiveResistances([1,1],Graph{1},Graph{2},1e-4,1,'spl');
+    try
+        parFlag = matlabpool('size');
+    catch
+        parFlag = 0;
+    end
+    if parFlag
+        if nargin == 3
+            [~,Z] = EffectiveResistancesPar([1,1],Graph{1},Graph{2},tol,epsilon,'spl');
+        elseif nargin == 2
+            [~,Z] = EffectiveResistancesPar([1,1],Graph{1},Graph{2},tol,1,'spl');
+        elseif nargin == 1
+            [~,Z] = EffectiveResistancesPar([1,1],Graph{1},Graph{2},1e-4,1,'spl');
+        end
+    else
+        warning('Parallelism not possible: matlabpool not found');
+        if nargin == 3
+            [~,Z] = EffectiveResistances([1,1],Graph{1},Graph{2},tol,epsilon,'spl');
+        elseif nargin == 2
+            [~,Z] = EffectiveResistances([1,1],Graph{1},Graph{2},tol,1,'spl');
+        elseif nargin == 1
+            [~,Z] = EffectiveResistances([1,1],Graph{1},Graph{2},1e-4,1,'spl');
+        end
     end
     queryFun = @(i,j) sum(((Z(:,i) - Z(:,j)).^2),1)';
 end
