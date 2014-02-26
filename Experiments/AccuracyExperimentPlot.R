@@ -28,8 +28,8 @@ gg <- ggplot(CA,aes(x=ed,y=V1,fill=type,ymin=mm,ymax=mp)) +
   theme(panel.background = element_rect(fill = "white")) + 
   labs(title="ca-GrQc (epsilon=0.1)")
 
-ggsave(gg, file="data10.png", width=8, height=4.5)
-ggsave(gg, file="data10.pdf", width=8, height=4.5)
+ggsave(gg, file="Accuracy_data10.png", width=8, height=4.5)
+ggsave(gg, file="Accuracy_data10.pdf", width=8, height=4.5)
 
 # Experiment 6D ca-HepTh
 
@@ -61,8 +61,8 @@ gg <- ggplot(CA,aes(x=ed,y=V1,fill=type,ymin=mm,ymax=mp)) +
   theme(panel.background = element_rect(fill = "white")) + 
   labs(title="ca-GrQc (epsilon=0.01)")
 
-ggsave(gg, file="data100.png", width=8, height=4.5)
-ggsave(gg, file="data100.pdf", width=8, height=4.5)
+ggsave(gg, file="Accuracy_data100.png", width=8, height=4.5)
+ggsave(gg, file="Accuracy_data100.pdf", width=8, height=4.5)
 
 CA = rbind(static1,query1,static,query);
 
@@ -74,5 +74,5 @@ gg <- ggplot(CA,aes(x=type,y=V2)) +
   theme(panel.background = element_rect(fill = "white")) + 
   labs(title="ca-GrQc")
 
-ggsave(gg, file="dataSTD.png", width=8, height=4.5)
-ggsave(gg, file="dataSTD.pdf", width=8, height=4.5)
+ggsave(gg, file="Accuracy_dataSTD.png", width=8, height=4.5)
+ggsave(gg, file="Accuracy_dataSTD.pdf", width=8, height=4.5)

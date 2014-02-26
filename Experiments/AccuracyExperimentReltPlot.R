@@ -1,6 +1,6 @@
 # Experiment 6D ca-HepTh
 
-results <- read.table("AccuracyResutls10diff.txt",col.names=c("meanS","stdS","meanQ","stdQ"))
+results <- read.table("AccuracyResutls10relt.txt",col.names=c("meanS","stdS","meanQ","stdQ"))
 static <- as.data.frame(cbind(results$meanS,results$stdS));
 static$mm = static$V1 - static$V2;
 static$mp = static$V1 + static$V2;
@@ -17,17 +17,17 @@ CA = rbind(static[seq(2000,length(results$meanS)-500,80),],query[seq(2000,length
 
 gg <- ggplot(CA,aes(x=ed,y=V1,fill=type,ymin=mm,ymax=mp)) + 
   geom_line(aes(colour=type)) + geom_ribbon(alpha=0.2) +
-  ylab("Absolute error (mean)") + 
+  ylab("Relative error (mean)") + 
   xlab("Edge index")+ 
   theme(panel.background = element_rect(fill = "white")) + 
   labs(title="ca-GrQc (epsilon=0.1)")
 
-ggsave(gg, file="Accuracy_data10diff.png", width=8, height=4.5)
-ggsave(gg, file="Accuracy_data10diff.pdf", width=8, height=4.5)
+ggsave(gg, file="Accuracy_data10relt.png", width=8, height=4.5)
+ggsave(gg, file="Accuracy_data10relt.pdf", width=8, height=4.5)
 
 # Experiment 6D ca-HepTh
 
-results <- read.table("AccuracyResutls100diff.txt",col.names=c("meanS","stdS","meanQ","stdQ"))
+results <- read.table("AccuracyResutls100relt.txt",col.names=c("meanS","stdS","meanQ","stdQ"))
 static1 <- as.data.frame(cbind(results$meanS,results$stdS));
 static1$mm = static1$V1 - static1$V2;
 static1$mp = static1$V1 + static1$V2;
@@ -45,13 +45,13 @@ CA = rbind(static1[seq(2000,length(results$meanS)-500,80),],query1[seq(2000,leng
 
 gg <- ggplot(CA,aes(x=ed,y=V1,fill=type,ymin=mm,ymax=mp)) + 
   geom_line(aes(colour=type)) + geom_ribbon(alpha=0.2) +
-  ylab("Absolute error (mean)") + 
+  ylab("Relative error (mean)") + 
   xlab("Edge index")+ 
   theme(panel.background = element_rect(fill = "white")) + 
   labs(title="ca-GrQc (epsilon=0.01)")
 
-ggsave(gg, file="Accuracy_data100diff.png", width=8, height=4.5)
-ggsave(gg, file="Accuracy_data100diff.pdf", width=8, height=4.5)
+ggsave(gg, file="Accuracy_data100relt.png", width=8, height=4.5)
+ggsave(gg, file="Accuracy_data100relt.pdf", width=8, height=4.5)
 
 CA = rbind(static1,query1,static,query);
 
@@ -59,9 +59,9 @@ CA = rbind(static1,query1,static,query);
 gg <- ggplot(CA,aes(x=type,y=V2)) + 
   geom_boxplot(aes(colour=type)) +
   xlab("Algorithm Version")+
-  ylab("Absolute error Standart Deviation")+
+  ylab("Relative error Standart Deviation")+
   theme(panel.background = element_rect(fill = "white")) + 
   labs(title="ca-GrQc")
 
-ggsave(gg, file="Accuracy_dataSTDdiff.png", width=8, height=4.5)
-ggsave(gg, file="Accuracy_dataSTDdiff.pdf", width=8, height=4.5)
+ggsave(gg, file="Accuracy_dataSTDrelt.png", width=8, height=4.5)
+ggsave(gg, file="Accuracy_dataSTDrelt.pdf", width=8, height=4.5)
