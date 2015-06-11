@@ -2,7 +2,7 @@
 numTrials = 5;
 %% Loading libraries
 	addpath(genpath('../'));
-	addpath(genpath('../../../svnrepo/matlablibs/'));
+	%addpath(genpath('../../../svnrepo/matlablibs/'));
 %% Loading graph
 gpath = '../DataSets/ca-GrQc.txt';
 gdata = importdata(gpath);
