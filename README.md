@@ -7,4 +7,3 @@ Dependencies: MATLAB, [MATLAB Parrallel Toolbox (optional)], CMG-Solver (http://
 
 OLD-CODE: http://ccom.uprrp.edu/~ikoutis/SpectralAlgorithms.htm
 
-web: https://dl.dropboxusercontent.com/u/48078991/richardglweb/richardgl.html
